@@ -4,9 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 
-const ANSWER = "2018-04-03";
-const TOTAL_QUIZ = 3;
-const CURRENT_QUIZ = 1;
 const quizzes = [
   {
     id: 1,
@@ -44,6 +41,7 @@ export default function QuizPage() {
   const [message, setMessage] = useState("");
 
   const currentQuiz = quizzes[quizIndex];
+  const isLastQuiz = quizIndex === quizzes.length - 1;
   const handleSubmit = () => {
     let isCorrect = false;
 
@@ -61,6 +59,8 @@ export default function QuizPage() {
 
   useEffect(() => {
     if (step === "correct") {
+      const delay = isLastQuiz ? 3000 : 2000;
+
       const timer = setTimeout(() => {
         if (quizIndex < quizzes.length - 1) {
           setQuizIndex((prev) => prev + 1);
@@ -70,7 +70,7 @@ export default function QuizPage() {
         } else {
           router.push("/letter");
         }
-      }, 2500);
+      }, delay);
 
       return () => clearTimeout(timer);
     }
@@ -161,8 +161,17 @@ export default function QuizPage() {
             transition={{ duration: 0.5 }}
             className="flex h-[60vh] flex-col items-center justify-center text-center"
           >
-            <p className="text-xl font-semibold">정답이에요 🎉</p>
-            <p className="mt-2 text-sm text-[#6b7684]">{quizzes.length - quizIndex - 1}문제 남았어요</p>
+            {!isLastQuiz ? (
+              <>
+                <p className="text-xl font-semibold">정답이에요 🎉</p>
+                <p className="mt-2 text-sm text-[#6b7684]">{quizzes.length - quizIndex - 1}문제 남았어요</p>
+              </>
+            ) : (
+              <>
+                <p className="text-xl font-semibold">다 풀었어요 💙 </p>
+                <p className="mt-2 text-sm text-[#6b7684]">다음은 뭘까요?</p>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
