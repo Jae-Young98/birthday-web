@@ -11,8 +11,8 @@ export default function IntroPage() {
   useEffect(() => {
     const timers = [
       setTimeout(() => setStep(1), 3000),
-      setTimeout(() => setStep(2), 7000),
-      setTimeout(() => router.push("/quiz"), 10000),
+      setTimeout(() => setStep(2), 9000),
+      setTimeout(() => router.push("/quiz"), 12000),
     ];
 
     return () => timers.forEach(clearTimeout);
@@ -75,6 +75,15 @@ export default function IntroPage() {
               >
                 조금 더 특별하게 해주고 싶어
               </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 2 }}
+                className="mt-2 text-xl font-semibold"
+              >
+                준비해봤으니 가볍게 즐겨주면 좋겠어
+              </motion.p>
             </motion.div>
           )}
 
@@ -86,7 +95,7 @@ export default function IntroPage() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.7 }}
             >
-              <p className="text-xl font-semibold">이제 시작할게요 🎉</p>
+              <p className="text-xl font-semibold">이제 시작! 🎉</p>
             </motion.div>
           )}
         </AnimatePresence>
