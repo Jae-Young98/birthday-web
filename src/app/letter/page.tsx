@@ -7,6 +7,8 @@ import confetti from "canvas-confetti";
 export default function LetterPage() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [clickConfetti, setClickConfetti] = useState(false);
+  const [opened, setOpened] = useState(false);
+  const [delivered, setDelivered] = useState(false);
 
   useEffect(() => {
     if (!showConfetti) return;
@@ -39,6 +41,16 @@ export default function LetterPage() {
       },
     },
   };
+
+  useEffect(() => {
+    if (!opened) return;
+
+    const timer = setTimeout(() => {
+      setDelivered(true);
+    }, 20000);
+
+    return () => clearTimeout(timer);
+  }, [opened]);
 
   const [letters, setLetters] = useState<string[][]>([]);
 
@@ -100,7 +112,12 @@ export default function LetterPage() {
           variants={shakeVariant}
           animate="shake"
           style={{ transformOrigin: "50% 100%" }}
-          onClick={() => setClickConfetti(true)}
+          onClick={() => {
+            setClickConfetti(true);
+            setTimeout(() => {
+              setOpened(true);
+            }, 600);
+          }}
         />
 
         <motion.p
@@ -116,6 +133,78 @@ export default function LetterPage() {
           선물이 도착했어요 <br /> 클릭하여 열기 🎁
         </motion.p>
       </motion.section>
+      {opened && (
+        <motion.div
+          className="fixed inset-0 z-50 bg-white flex items-center justify-center px-8 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div>
+            {!delivered ? (
+              <>
+                <motion.p
+                  className="text-xl font-semibold text-[#191f28]"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  오늘 하루
+                </motion.p>
+
+                <motion.p
+                  className="mt-2 text-xl font-semibold text-[#191f28]"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  가장 행복해야 할 사람에게
+                </motion.p>
+
+                <motion.p
+                  className="mt-8 text-base font-medium text-[#6b7684] flex items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.6 }}
+                >
+                  배송중
+                  <motion.span
+                    className="inline-block ml-2"
+                    animate={{ x: [0, 24, 0] }}
+                    transition={{
+                      duration: 1.4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    🚚
+                  </motion.span>
+                </motion.p>
+              </>
+            ) : (
+              <>
+                <motion.p
+                  className="text-xl font-semibold text-[#191f28]"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1 }}
+                >
+                  생일 축하해 🎂
+                </motion.p>
+
+                <motion.p
+                  className="mt-3 text-xl font-semibold text-[#191f28]"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  행복한 저녁 시간 보내자 💙
+                </motion.p>
+              </>
+            )}
+          </div>
+        </motion.div>
+      )}
     </main>
   );
 }
