@@ -7,21 +7,21 @@ import { AnimatePresence, motion } from "framer-motion";
 const quizzes = [
   {
     id: 1,
-    question: ["우리가 처음 만난 날은", "언제일까요?"],
+    question: ["날짜 입력", "문제"],
     type: "date",
-    answer: "2018-04-03",
+    answer: "2025-12-21",
   },
   {
     id: 2,
-    question: ["오늘 예약한 식당은", "어디일까요?"],
+    question: ["텍스트 입력", "문제"],
     type: "text",
-    answer: ["내추럴하이", "내츄럴하이", "네추럴하이", "네츄럴하이"],
+    answer: ["test"],
   },
   {
     id: 3,
-    question: ["내가 제일 좋아하는", "음식은 뭘까요?", "(음료 포함)"],
+    question: ["텍스트 입력", "문제", "(경우의 수 고려)"],
     type: "text",
-    answer: ["콜라", "코카콜라"],
+    answer: ["test", "테스트", "태스트"],
   },
 ];
 
@@ -34,7 +34,7 @@ export default function QuizPage() {
     return `${yyyy}-${mm}-${dd}`;
   };
 
-  const [quizIndex, setQuizIndex] = useState(0); // 몇 번째 문제인지
+  const [quizIndex, setQuizIndex] = useState(0);
   const [step, setStep] = useState<"quiz" | "correct">("quiz");
   const router = useRouter();
   const [value, setValue] = useState(getToday());
