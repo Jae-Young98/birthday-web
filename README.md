@@ -13,6 +13,8 @@ NEXT_PUBLIC_BIRTHDAY_NAME_KO=내부 페이지에 표시 될 이름
 
 vecel에 배포하기 전 로컬에서 편지를 확인하기 위해선 `src/app/letter/page.tsx`의 `55-61L`을 주석처리 하고, 아래와 같이 사용해주세요.
 
+문제 및 정답 변수는 `src/app/quiz/page.tsx`의 `7-26L` 확인해주세요.
+
 ```javascript
 const letters = [["편지"], ["여러 줄", "출력", "출력2"]];
 ```
